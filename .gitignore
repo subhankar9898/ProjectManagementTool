@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node / React
+frontend/node_modules/
+backend/node_modules/
+
+# Build
+dist/
+build/
+.env
+
+# Caches
+*.log
+*.cache
+
+# VS Code
+.vscode/
+
+# Testing
+pytest_cache/
