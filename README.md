@@ -55,9 +55,13 @@ A robust full-stack Project Management Application designed to streamline team w
 │   ├── 📂 src
 │   ├── 📂 public
 │   └── package.json
-│
+|
 ├── ERD of Project Management Tool Project.pdf
+|
+├──ProjectManagementTool.postman_collection.json
+|
 └── README.md
+
 
 ```
 ---
