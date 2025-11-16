@@ -38,8 +38,12 @@ app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY") # Your secret ke
 # Initialize JWT
 jwt = JWTManager(app)
 
-# Initialize CORS (to allow your frontend to make requests)
-CORS(app)
+# Configure CORS to allow your frontend
+CORS(app, resources={r"/api/*": {"origins": [
+    "http://127.0.0.1:5173",  # Local development
+    "https://projectmanagementtool-khaki.vercel.app", # Your main Vercel app
+    "https://projectmanagementtool-n8mk6qnne-subhankar9898s-projects.vercel.app" # The Vercel preview from your screenshot
+]}})
 
 # Import and initialize the database *after* app config
 from models import db, User, Project, Task, UserStory
