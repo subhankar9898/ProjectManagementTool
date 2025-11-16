@@ -7,23 +7,29 @@ from datetime import datetime
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 from flask_cors import CORS
 from groq import Groq
-
-# --- Database Configuration ---
-DB_USERNAME = "root"
-DB_PASSWORD = os.environ.get("DB_PASSWORD") # Your URL-encoded password
-DB_NAME = "project_management_tool"
-DB_HOST = "127.0.0.1"        # Using 127.0.0.1 instead of 'localhost'
-
-# MySQL connection string
-DATABASE_URI = f"mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
-
 # --- App Initialization ---
 app = Flask(__name__)
+load_dotenv()
 
-# --- App Configuration ---
-# Configure the database URI
-app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+# --- Database Configuration ---
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL and DATABASE_URL.startswith('postgres://'):
+    # Heroku/Render's PostgreSQL URL fix
+    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+else:
+    # Fallback to local MySQL database
+    DB_USERNAME = "root"
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    DB_NAME = "project_management_tool"
+    DB_HOST = "127.0.0.1"
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+mysqlconnector://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+
+
 
 # Configure JWT settings (we need a 'secret key' to sign the tokens)
 app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY") # Your secret key
