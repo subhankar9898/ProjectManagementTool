@@ -40,25 +40,26 @@ A robust full-stack Project Management Application designed to streamline team w
 ---
 
 ## 📁 Project Folder Structure
-ProjectManagementTool/
-│
-├── backend/
+
+```plaintext
+📦 ProjectManagementTool
+├── 📂 backend
 │   ├── app.py
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── tests/
+│   ├── 📂 models
+│   ├── 📂 routes
+│   ├── 📂 services
+│   ├── 📂 tests
 │   └── requirements.txt
 │
-├── frontend/
-│   ├── src/
-│   ├── public/
+├── 📂 frontend
+│   ├── 📂 src
+│   ├── 📂 public
 │   └── package.json
 │
 ├── ERD of Project Management Tool Project.pdf
 └── README.md
 
-
+```
 ---
 
 ## ⚙️ Local Setup Instructions
