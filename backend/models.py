@@ -19,7 +19,7 @@ class User(db.Model):
     full_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.Enum('Admin', 'Manager', 'Developer'), nullable=False)
+    role = db.Column(db.Enum('Admin', 'Manager', 'Developer', name='user_role_enum'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Relationships
@@ -55,7 +55,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.Text, nullable=True)
-    status = db.Column(db.Enum('To Do', 'In Progress', 'Done'), nullable=False, default='To Do')
+    status = db.Column(db.Enum('To Do', 'In Progress', 'Done', name='task_status_enum'), nullable=False, default='To Do')
     deadline = db.Column(db.Date, nullable=True)
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), nullable=False)
     assignee_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
