@@ -15,6 +15,7 @@ const [aiDescription, setAiDescription] = useState('');
     const [description, setDescription] = useState('');
     const [assigneeId, setAssigneeId] = useState('');
     const [deadline, setDeadline] = useState('');
+    const [newMemberId, setNewMemberId] = useState('');
 
   // 2. WRAP your function in useCallback
   const fetchTasks = useCallback(async () => {
@@ -73,6 +74,23 @@ const handleCreateTask = async (e) => {
     }
   };
 
+  const handleAddMember = async (e) => {
+    e.preventDefault();
+    setError(null);
+    try {
+      const token = localStorage.getItem('access_token');
+      await api.post(`/projects/${id}/members`, 
+        { user_id: newMemberId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("Member added successfully!");
+      setNewMemberId('');
+    } catch (err ){
+      console.error('Error adding member:', err);
+      setError(err.response?.data?.message || 'Failed to add member.');
+    }
+  };
+
   // Handle task status update
   const handleUpdateStatus = async (taskId, newStatus) => {
     setError(null);
@@ -125,6 +143,19 @@ const handleCreateTask = async (e) => {
   return (
     <div>
       <Link to="/">&larr; Back to Dashboard</Link>
+      {/* --- ADD MEMBER FORM --- */}
+      <form onSubmit={handleAddMember} style={{ marginBottom: '20px' }}>
+        <label>Add Member (User ID): </label>
+        <input 
+          type="number" 
+          value={newMemberId} 
+          onChange={(e) => setNewMemberId(e.target.value)} 
+          placeholder="e.g. 2"
+          style={{ width: '60px', marginRight: '10px' }}
+        />
+        <button type="submit">Add</button>
+      </form>
+      <hr />
       <h1>Project {id} Tasks</h1>
       {/* --- NEW TASK FORM --- */}
 <form onSubmit={handleCreateTask} style={{ margin: '20px 0', padding: '10px', border: '1px solid #555' }}>
