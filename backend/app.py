@@ -49,6 +49,10 @@ CORS(app, resources={r"/api/*": {"origins": [
 from models import db, User, Project, Task, UserStory
 db.init_app(app) # Initialize db with the app
 
+# Create all database tables (if they don't exist)
+with app.app_context():
+    db.create_all()
+
 # --- A Simple Test Route ---
 @app.route('/')
 def hello():
